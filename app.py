@@ -8,6 +8,7 @@ import json
 
 MQTT_BROKER_ADDRESS = os.environ.get("MQTT_BROKER_ADDRESS")
 MQTT_BROKER_PORT = os.environ.get("MQTT_BROKER_PORT")
+MQTT_BROKER_WEBSOCKET_PORT = os.environ.get("MQTT_BROKER_WEBSOCKET_PORT")
 MQTT_BROKER_USER = os.environ.get("MQTT_BROKER_USER")
 MQTT_BROKER_PASSWORD = os.environ.get("MQTT_BROKER_PASSWORD")
 MQTT_TOPIC = os.environ.get("MQTT_TOPIC")
@@ -44,6 +45,7 @@ for local webcam use cv2.VideoCapture(0)
 cap = None
 def gen_frames():
     global cap
+    cap = cv2.VideoCapture('http://{}:{}/frame.mjpg'.format(MJPEG_ADDRESS, MJPEG_PORT))
     while True:
         # if not cap:
         #     break
@@ -57,15 +59,12 @@ def gen_frames():
                  b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
-
+    return render_template('index.html', MQTT_BROKER_ADDRESS=MQTT_BROKER_ADDRESS,MQTT_BROKER_WEBSOCKET_PORT=MQTT_BROKER_WEBSOCKET_PORT,MQTT_BROKER_USER=MQTT_BROKER_USER,MQTT_BROKER_PASSWORD=MQTT_BROKER_PASSWORD,MQTT_TOPIC_CAMERA=MQTT_TOPIC_CAMERA)
 @app.route('/camera', methods=['POST'])
 def camera():
     print("method: {}".format(request.method))
     if request.method == 'POST':
-        print(1)
         request_json = request.json
-        print(2)
         print("request_json: {}".format(request_json))
         action = request_json.get('action')
         print("action: {}".format(action))
@@ -84,6 +83,7 @@ def camera():
             cap = cv2.VideoCapture('http://{}:{}/frame.mjpg'.format(MJPEG_ADDRESS, MJPEG_PORT))
         else:
             pass # unknown
+        print("DONE")
         return str(action)
     return "OK"
 
