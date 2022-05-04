@@ -6,5 +6,61 @@
                 <img src="{{ url_for('video_feed') }}" width="100%">
             </div>
         </div>
+        <div class="row">
+        <h3>Our Flask Buttons<h3/>
+            <form method="post" action="">
+                <input type="submit" value="UP" name="action"/>
+                <input type="submit" value="DOWN" name="action"/>
+                <input type="submit" value="LEFT" name="action"/>
+                <input type="submit" value="RIGHT" name="action"/>
+                <input type="submit" value="MIDDLE" name="action"/>
+                <input type="submit" value="REFRESH" name="action"/>
+            </form>
+        </div>
+        <div class="row">
+            <button class="post-btn" id="UP" value="UP">UP</button>
+            <button class="post-btn" id="DOWN" value="DOWN">DOWN</button>
+            <button class="post-btn" id="LEFT" value="LEFT">LEFT</button>
+            <button class="post-btn" id="RIGHT" value="RIGHT">RIGHT</button>
+            <button class="post-btn" id="MIDDLE" value="MIDDLE">MIDDLE</button>
+            <button class="post-btn" id="REFRESH" value="REFRESH">REFRESH</button>
+            <script>
+                var buttons = document.getElementsByClassName('post-btn');
+                for(var i = 0; i < buttons.length; i++) {
+                    console.log(i);
+                    button = buttons[i];
+                    buttons[i].onclick = function(){
+                        try {
+                            const response = fetch(
+                                "{{ url_for('camera') }}", 
+                                {
+                                    method: 'post',
+                                    headers:{'Content-Type': 'application/json; charset=utf-8'},
+                                    body: JSON.stringify({
+                                        "action": this.value
+                                    })
+                                }
+                            );
+                            console.log('Completed!', response);
+                        } catch(err) {
+                            console.error(`Error: ${err}`);
+                        }
+                    }};
+                    // button.addEventListener('click', async _ => {
+                    // try {
+                    //     const response = await fetch("{{ url_for('camera') }}", {
+                    //     method: 'post',
+                    //     headers:{'Content-Type': 'application/json; charset=utf-8'},
+                    //     body: JSON.stringify({
+                    //         "action": button.value
+                    //     })
+                    //     });
+                    //     console.log('Completed!', response);
+                    // } catch(err) {
+                    //     console.error(`Error: ${err}`);
+                    // }
+                    // });
+            </script>
+        </div>
     </div>
 </body>

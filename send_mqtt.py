@@ -51,8 +51,9 @@ client.loop_start()        #start the loop
 while Connected != True:    #Wait for connection
     time.sleep(0.1)
   
-client.subscribe(MQTT_TOPIC)
-  
+client.subscribe(MQTT_TOPIC+"/#")
+# client.publish(topic, msg)
+
 try:
     while True:
         time.sleep(1)
