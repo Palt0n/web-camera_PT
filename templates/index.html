@@ -3,26 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Pointer lock demo</title>
-    <link type="text/css" rel="stylesheet" href="style.css">
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    
+            
 </head>
 <body>
     <div class="container">
         <div class="row">
             <div class="col-lg-8  offset-lg-2">
                 <h3 class="mt-5">Live Streaming</h3>
-                <img src="{{ url_for('video_feed') }}" width="100%">
             </div>
-        </div>
-        <div class="row">
-        <h3>Our Flask Buttons<h3/>
-            <form method="post" action="">
-                <input type="submit" value="UP" name="action"/>
-                <input type="submit" value="DOWN" name="action"/>
-                <input type="submit" value="LEFT" name="action"/>
-                <input type="submit" value="RIGHT" name="action"/>
-                <input type="submit" value="MIDDLE" name="action"/>
-                <input type="submit" value="REFRESH" name="action"/>
-            </form>
         </div>
         <div class="row">
             <button class="btn-move-camera" id="UP" value="UP">UP</button>
@@ -96,9 +86,10 @@
     <div class="information">
         <h1>Pointer lock demo</h1>
 
-        <p>This demo demonstrates usage of the pointer lock API. Click on the canvas area and your mouse will directly control the ball inside the canvas, not your mouse pointer. You can press escape to return to the standard expected state.</p>
+        <p>Click on the canvas area and your mouse will directly control the ball inside the canvas. You can press escape to return to the standard expected state.</p>
     </div>
 
+    <img src="{{ url_for('video_feed') }}" width="640">
     <canvas width="640" height="360">
         Your browser does not support HTML5 canvas
     </canvas>

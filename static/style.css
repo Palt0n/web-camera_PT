@@ -13,6 +13,12 @@ canvas {
 	border: 1px solid black;
 }
 
+img {
+	display: block;
+	margin: 0 auto;
+	border: 1px solid black;
+}
+
 .information {
 	width: 640px;
 	margin: 0 auto 50px;
