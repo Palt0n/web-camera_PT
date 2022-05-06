@@ -1,3 +1,10 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Pointer lock demo</title>
+    <link type="text/css" rel="stylesheet" href="style.css">
+</head>
 <body>
     <div class="container">
         <div class="row">
@@ -84,23 +91,20 @@
             <script>
                 MQTTconnect();
             </script>
-            <script>
-
-                    // button.addEventListener('click', async _ => {
-                    // try {
-                    //     const response = await fetch("{{ url_for('camera') }}", {
-                    //     method: 'post',
-                    //     headers:{'Content-Type': 'application/json; charset=utf-8'},
-                    //     body: JSON.stringify({
-                    //         "action": button.value
-                    //     })
-                    //     });
-                    //     console.log('Completed!', response);
-                    // } catch(err) {
-                    //     console.error(`Error: ${err}`);
-                    // }
-                    // });
-            </script>
         </div>
     </div>
+    <div class="information">
+        <h1>Pointer lock demo</h1>
+
+        <p>This demo demonstrates usage of the pointer lock API. Click on the canvas area and your mouse will directly control the ball inside the canvas, not your mouse pointer. You can press escape to return to the standard expected state.</p>
+    </div>
+
+    <canvas width="640" height="360">
+        Your browser does not support HTML5 canvas
+    </canvas>
+    <div id="tracker"></div>
+
+    <script src="{{url_for('static', filename='app.js')}}"></script>
 </body>
+
+</html>
