@@ -89,11 +89,14 @@
         <p>Click on the canvas area and your mouse will directly control the ball inside the canvas. You can press escape to return to the standard expected state.</p>
     </div>
 
-    <img src="{{ url_for('video_feed') }}" width="640">
-    <canvas width="640" height="360">
-        Your browser does not support HTML5 canvas
-    </canvas>
+    <div id="container">
+        <img class='img' src="{{ url_for('video_feed') }}" alt="" width="640"/>
+        <canvas id="reticleCanvas" width="640" height="360" background-image: url({{ url_for('video_feed') }});>
+            Your browser does not support HTML5 canvas
+        </canvas>
+    </div>
     <div id="tracker"></div>
+
 
     <script src="{{url_for('static', filename='app.js')}}"></script>
 </body>

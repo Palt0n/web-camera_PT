@@ -34,3 +34,22 @@ img {
 h1 {
 	font-size: 200%;
 }
+
+body{text-align: center;background: #f2f6f8;}
+.img{position:absolute;z-index:1;}
+
+#container{
+    display:inline-block;
+    width:640px; 
+    height:360px;
+    margin: 0 auto; 
+    background: white; 
+    position:relative; 
+    border:5px solid black; 
+    border-radius: 10px; 
+    box-shadow: 0 5px 50px #333}
+
+#reticleCanvas{
+    position:relative;
+    z-index:20;
+}

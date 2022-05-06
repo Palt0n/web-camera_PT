@@ -1,4 +1,9 @@
 // helper function
+// 4 Coordinate system used
+// w & h = Pixel Width and Height with 640x360
+// x & y = Pixel with 0,0 origin -320 to 320 x -180 to 180
+// a & b = Angle with 0,0 origin -90 to 90 x 90 to -90
+// A & B = Angle with 0 to 180 x 0 to 180 
 
 const RADIUS = 20;
 
@@ -12,33 +17,71 @@ function degToRad(degrees) {
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext('2d');
 
+var a_global = 0
+var b_global = 0
+
 var x_0 = Math.floor(canvas.width / 2) + 0.5;
 var y_0 = Math.floor(canvas.height / 2) + 0.5;
 var x = x_0;
 var y = y_0;
 
+
+var list_angle_2_pixel = [0, 20, 45, 90, 130]
+
 function canvasDraw() {
   // ctx.fillStyle = "black";
   // ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "#f00";
   ctx.beginPath();
-  ctx.arc(x, y, RADIUS, 0, degToRad(360), true);
-  ctx.fill();
+  ctx.arc(x_0, y_0, RADIUS, 0, degToRad(360), true);
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = 'black';
+  ctx.stroke();
+  ctx.closePath()
 
   // remove aliasing
-  ctx.strokeWidth = 1;
-  ctx.moveTo(x_0, y_0 - 10);
-  ctx.lineTo(x_0, y_0 + 10);
-  ctx.moveTo(x_0 - 10,  y_0);
-  ctx.lineTo(x_0 + 10,  y_0);
+  ctx.beginPath();
+  ctx.moveTo(x, y - 30);
+  ctx.lineTo(x, y + 30);
+  ctx.moveTo(x - 30,  y);
+  ctx.lineTo(x + 30,  y);
   // Line color
-  ctx.strokeStyle = 'green';
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = 'black';
   ctx.stroke();
+  ctx.closePath()
+
+  // Line from center to mouse
+  ctx.beginPath();
   ctx.moveTo(x_0,  y_0);
   ctx.lineTo(x ,  y);
-  ctx.strokeStyle = 'green';
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'black';
   ctx.stroke();
+  ctx.closePath()
+
+  // Grid
+  ctx.beginPath();
+  for(let i = 0; i < list_angle_2_pixel.length; i++){
+    pixel = list_angle_2_pixel[i]
+    var x_up = x_0 + pixel
+    var y_up = y_0 + pixel
+    var x_down = x_0 - pixel
+    var y_down = y_0 - pixel
+    ctx.moveTo(x_up, 0);
+    ctx.lineTo(x_up, canvas.height);
+    ctx.moveTo(0, y_up);
+    ctx.lineTo(canvas.width, y_up);
+    ctx.moveTo(x_down, 0);
+    ctx.lineTo(x_down, canvas.height);
+    ctx.moveTo(0, y_down);
+    ctx.lineTo(canvas.width, y_down);
+  }
+
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'black';
+  ctx.stroke();
+  ctx.closePath()
 }
 canvasDraw();
 
