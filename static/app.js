@@ -87,11 +87,9 @@ canvasDraw();
 
 // pointer lock object forking for cross browser
 
-canvas.requestPointerLock = canvas.requestPointerLock ||
-                            canvas.mozRequestPointerLock;
+canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock;
 
-document.exitPointerLock = document.exitPointerLock ||
-                           document.mozExitPointerLock;
+document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock;
 
 canvas.onclick = function() {
   canvas.requestPointerLock();
