@@ -31,7 +31,7 @@
 
     <div id="container">
         <img class='img' src="{{ url_for('video_feed') }}" alt="" width="640"/>
-        <canvas id="reticleCanvas" width="640" height="360" background-image: url({{ url_for('video_feed') }});>
+        <canvas id="reticleCanvas" width="640" height="360">
             Your browser does not support HTML5 canvas
         </canvas>
     </div>
@@ -39,13 +39,14 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+    <script src="{{url_for('static', filename='app.js')}}"></script>
     <script src="{{url_for('static', filename='mqtt.js')}}"></script>
+    <script src="{{url_for('static', filename='buttons.js')}}"></script>
     <script type="text/javascript">
-        MQTTconnect("{{ MQTT_BROKER_ADDRESS }}", "{{ MQTT_BROKER_WEBSOCKET_PORT }}", "{{ MQTT_BROKER_USER }}", "{{ MQTT_BROKER_PASSWORD }}", "{{ MQTT_TOPIC_CAMERA }}");
+        MQTTconnect("{{ MQTT_BROKER_ADDRESS }}", "{{ MQTT_BROKER_WEBSOCKET_PORT }}", "{{ MQTT_BROKER_USER }}", "{{ MQTT_BROKER_PASSWORD }}", "{{ MQTT_TOPIC }}", "{{ MQTT_TOPIC_CAMERA }}", "{{ MQTT_TOPIC_CAMERA_MOVE }}");
         setButtonActions()
     </script>
-    <script src="{{url_for('static', filename='buttons.js')}}"></script>
-    <script src="{{url_for('static', filename='app.js')}}"></script>
+
 </body>
 
 </html>

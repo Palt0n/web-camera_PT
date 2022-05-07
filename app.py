@@ -2,7 +2,6 @@
 from flask import Flask, render_template, Response, request
 import cv2
 import os
-import paho.mqtt.client as mqttClient
 import time
 import json
 
@@ -24,11 +23,8 @@ port = MQTT_BROKER_PORT
 user = MQTT_BROKER_USER
 password = MQTT_BROKER_PASSWORD
 
-client = mqttClient.Client(MQTT_CLIENT_NAME)               #create new instance
-client.username_pw_set(user, password=password)    #set username and password
-client.connect(broker_address, port=port)          #connect to broker
-client.loop_start()        #start the loop
 MQTT_TOPIC_CAMERA = MQTT_TOPIC + "/camera"
+MQTT_TOPIC_CAMERA_MOVE = MQTT_TOPIC + "/camera_move"
 
 MJPEG_ADDRESS = os.environ.get("MJPEG_ADDRESS")
 MJPEG_PORT = os.environ.get("MJPEG_PORT")
@@ -59,33 +55,7 @@ def gen_frames():
                  b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html', MQTT_BROKER_ADDRESS=MQTT_BROKER_ADDRESS,MQTT_BROKER_WEBSOCKET_PORT=MQTT_BROKER_WEBSOCKET_PORT,MQTT_BROKER_USER=MQTT_BROKER_USER,MQTT_BROKER_PASSWORD=MQTT_BROKER_PASSWORD,MQTT_TOPIC_CAMERA=MQTT_TOPIC_CAMERA)
-@app.route('/camera', methods=['POST'])
-def camera():
-    print("method: {}".format(request.method))
-    if request.method == 'POST':
-        request_json = request.json
-        print("request_json: {}".format(request_json))
-        action = request_json.get('action')
-        print("action: {}".format(action))
-        if action == 'UP':
-            client.publish(MQTT_TOPIC_CAMERA, json.dumps({"camera_tilt":180}))
-        elif action == 'DOWN':
-            client.publish(MQTT_TOPIC_CAMERA, json.dumps({"camera_tilt":0}))
-        elif action == 'LEFT':
-            client.publish(MQTT_TOPIC_CAMERA, json.dumps({"camera_pan":180}))
-        elif action == 'RIGHT':
-            client.publish(MQTT_TOPIC_CAMERA, json.dumps({"camera_pan":0}))
-        elif action == 'MIDDLE':
-            client.publish(MQTT_TOPIC_CAMERA, json.dumps({"camera_pan":90, "camera_tilt":90}))
-        elif action == 'REFRESH':
-            global cap
-            cap = cv2.VideoCapture('http://{}:{}/frame.mjpg'.format(MJPEG_ADDRESS, MJPEG_PORT))
-        else:
-            pass # unknown
-        print("DONE")
-        return str(action)
-    return "OK"
+    return render_template('index.html', MQTT_BROKER_ADDRESS=MQTT_BROKER_ADDRESS,MQTT_BROKER_WEBSOCKET_PORT=MQTT_BROKER_WEBSOCKET_PORT,MQTT_BROKER_USER=MQTT_BROKER_USER,MQTT_BROKER_PASSWORD=MQTT_BROKER_PASSWORD,MQTT_TOPIC=MQTT_TOPIC,MQTT_TOPIC_CAMERA=MQTT_TOPIC_CAMERA,MQTT_TOPIC_CAMERA_MOVE=MQTT_TOPIC_CAMERA_MOVE)
 
 @app.route('/video_feed')
 def video_feed():
