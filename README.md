@@ -72,6 +72,14 @@ Or you can just do `export MJPEG_ADDRESS=XXX` everytime you create a new termina
 MJPEG_ADDRESS=192.168.XX.XXXX
 MJPEG_PORT=XXXX
 ```
+## Install python libraries
+Use pip to install `flask` and `opencv-python`
+```
+pip install flask
+pip install opencv-python
+```
+If some libraries are missing, just check my `requirements.txt`
+
 ## Check if opencv works
 Run simple script to view image stream from opencv
 ```
