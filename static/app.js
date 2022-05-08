@@ -157,7 +157,7 @@ var T_global = 90
 var P_move = 90
 var T_move = 90
 
-var LIST_RADIUS_ab = [20, 60, 100, 140]
+var LIST_RADIUS_ab = [5, 30, 70, 140]
 
 function calculateCircleSectionCoordinates(xCenter, yCenter, radiusInner, radiusOuter, section){
   var angleSection = 360/section;
@@ -322,8 +322,8 @@ function loop() {
       var hyp_move_delta = hyp_cursor - hyp_move
       var x_move_delta = x_cursor/hyp_cursor*hyp_move_delta
       var y_move_delta = y_cursor/hyp_cursor*hyp_move_delta
-      x_cursor = x_move_delta
-      y_cursor = y_move_delta
+      x_cursor = 0//x_move_delta
+      y_cursor = 0//y_move_delta
       moveCamera(a_cursor, b_cursor)
     }
     // console.log("x: "+x_cursor+" y: "+y_cursor+" a: "+a_cursor+" b: "+b_cursor)
