@@ -11,10 +11,6 @@ Controls added to move Camera in Pan and Tilt directions by sending MQTT command
 ## Check if libcamera works/stream setup correctly
 1. Create mjpeg stream
 2. View in windows machine using VLC
-```
-Media > Open Network Stream
-tcp/mjpeg://192.168.XX.XXXX:XXXX
-```
 ## Creating mjpeg stream
 Run this command on RPI, add `-v` to view verbose log
 Send with 144p
@@ -37,6 +33,16 @@ terminate called after throwing an instance of 'std::runtime_error'
   what():  failed to send data on socket
 Aborted
 ```
+## View in Windows using VLC
+At this point, the mjpeg stream should be viewable from your Windows PC.
+Download vlc from https://www.videolan.org/vlc/download-windows.html
+Navigate to `Media` > `Open Network Stream`
+This is the stream address
+```
+tcp/mjpeg://192.168.XX.XXXX:XXXX
+```
+You should see the video stream, but it will have a 2 seconds delay.
+
 ## Create systemd to auto restart service
 ```
 cd /lib/systemd/system/
