@@ -40,6 +40,14 @@ Aborted
 ```
 
 # Setup in Windows
+## Setup Env Variables
+Create var to store the address of the rpi
+Since I use `venv`, I edit my `env/Scripts/activate` with `export ENV_VAR=XXX` to create my env variable
+Or you can just do `export MJPEG_ADDRESS=XXX` everytime you create a new terminal
+```
+MJPEG_ADDRESS=192.168.XX.XXXX
+MJPEG_PORT=XXXX
+```
 ## Check if opencv works
 Run simple script to view image stream from opencv
 ```
@@ -51,11 +59,11 @@ To view stream in browser, need to convert the mjpeg stream into a browser compa
 The way I did it is to host a server that does the conversion from mjpeg stream into jpg.
 I wrote `app.py` that converts it into a constantly updating jpg image
 ```
-python app.py
+python app_basic.py
 ```
 ```
-python app.py 
- * Serving Flask app 'app' (lazy loading)
+$ python app_basic.py 
+ * Serving Flask app 'app_basic' (lazy loading)
  * Environment: production
    WARNING: This is a development server. Do not use it in a production deployment.
    Use a production WSGI server instead.
@@ -64,8 +72,9 @@ python app.py
  * Restarting with stat
  * Debugger is active!
  * Debugger PIN: 119-083-471
-127.0.0.1 - - [03/May/2022 18:22:51] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [03/May/2022 18:22:53] "GET /video_feed HTTP/1.1" 200 -
-127.0.0.1 - - [03/May/2022 18:23:01] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [08/May/2022 13:48:47] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [08/May/2022 13:48:47] "GET /static/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [08/May/2022 13:48:50] "GET /video_feed HTTP/1.1" 200 -
 ```
 The site should be accessible on your localhost at `http://127.0.0.1:5000`
+# NOTE that if you refresh the page, libcamera will die and need to be restarted.
