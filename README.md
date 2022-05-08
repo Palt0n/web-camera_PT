@@ -5,7 +5,6 @@ Controls added to move Camera in Pan and Tilt directions by sending MQTT command
 # Stuff Needed
 1. RPI 3B+ with Bullseye arm64 lite
 2. Raspberry Pi Camera v2.1
-3. MQTT Server
 4. Windows Machine
 
 # Setup in RPI
@@ -37,6 +36,31 @@ XXX
 terminate called after throwing an instance of 'std::runtime_error'
   what():  failed to send data on socket
 Aborted
+```
+## Create systemd to auto restart service
+```
+cd /lib/systemd/system/
+sudo nano libcamera_stream.service
+```
+```
+[Unit]
+Description=Runs the Libcamera Streaming Service
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=libcamera-vid -t 0 --width 256 --height 144 -q 100 -n --codec mjpeg --inline --listen -o tcp://192.168.XX.XX:XXXX
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+```
+```
+sudo chmod 644 /lib/systemd/system/libcamera_stream.service
+sudo systemctl daemon-reload
+sudo systemctl enable libcamera_stream.service
+sudo systemctl start libcamera_stream.service
+sudo systemctl status libcamera_stream.service
 ```
 
 # Setup in Windows
