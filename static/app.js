@@ -5,10 +5,10 @@
 // helper function
 // 4 Coordinate system used
 // w & h = Pixel Width and Height with 640x360
-// w_cursor & h_cursor = Pixel with 0,0 origin -320 to 320 w_cursor -180 to 180
-// a & b = Angle with 0,0 origin -90 to 90 w_cursor 90 to -90
-// A & B = Angle with 0 to 180 w_cursor 0 to 180 
-
+// w_cursor & h_cursor = Pixel with 0,0 origin -320 to 320, -180 to 180
+// a & b = Angle with 0,0 origin -90 to 90, 90 to -90
+// A & B = Angle with 0 to 180, 0 to 180 
+// P & T = PWM Signal send to servo with 0 to 180, 0 to 180 
 const RADIUS = 18;
 
 function degToRad(degrees) {
@@ -151,7 +151,8 @@ function updatePosition(e) {
 
 function redrawTracker() {
   // console.log("w_cursor: "+w_cursor+" h_cursor: "+h_cursor)
-  tracker.textContent = "X position: " + x_cursor + ", Y position: " + y_cursor;
+  // tracker.textContent = "X: " + x_cursor + ", Y: " + y_cursor + ", a: " + a_cursor + ", b: " + b_cursor;
+  tracker.textContent = "a: " + a_cursor + ", b: " + b_cursor + ", A: " + A_global + ", B: " + B_global;
 
   if (!animation) {
     animation = requestAnimationFrame(function() {
@@ -181,8 +182,8 @@ function loop() {
       var y_move_delta = y_cursor/hyp_cursor*hyp_move_delta
       x_cursor = x_move_delta
       y_cursor = y_move_delta
+      moveCamera(a_cursor, b_cursor)
     }
-    moveCamera(a_cursor, b_cursor)
     // console.log("x: "+x_cursor+" y: "+y_cursor+" a: "+a_cursor+" b: "+b_cursor)
     w_cursor = convert_x_to_w(x_cursor)
     h_cursor = convert_y_to_h(y_cursor)
@@ -242,19 +243,7 @@ function convert_w_to_x(w){
 function convert_h_to_y(h){
   return -(h - h_origin)
 }
-// called when a message arrives
-// function onMessageArrived(message) {
-//   console.log("onMessageArrived:"+message.payloadString);
-//   subscribe_json = JSON.parse(message.payloadString)
-//   if ("move_camera_pan" in subscribe_json){
-//     P_global = subscribe_json.move_camera_pan
-//     A_global = convert_P_to_A(P_global)
-//   }
-//   if ("move_camera_tilt" in subscribe_json){
-//     T_global = subscribe_json.move_camera_tilt
-//     B_global = convert_T_to_B(T_global)
-//   }
-// }
+
 function convert_x_to_a(x){
   var index = 0
   for(let i = 1; i < list_angle_2_pixel.length; i++){
