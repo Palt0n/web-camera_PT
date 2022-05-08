@@ -8,7 +8,123 @@
 // w_cursor & h_cursor = Pixel with 0,0 origin -320 to 320, -180 to 180
 // a & b = Angle with 0,0 origin -90 to 90, 90 to -90
 // A & B = Angle with 0 to 180, 0 to 180 
-// P & T = PWM Signal send to servo with 0 to 180, 0 to 180 
+// P & T = PWM Signal send to servo with 0 to 180, 0 to 180
+LIST_ANGLE_to_ab = [
+  // TODO: How to get this formula?
+  // H < LIST_RADIUS_ab[1]
+  //  1,  0 =  22.5 < angle <     0 (-22.5)
+  //  1,  1 =  67.5 < angle <  22.5
+  //  0,  1 = 112.5 < angle <  67.5
+  // -1,  1 = 157.5 < angle < 112.5
+  // -1,  0 = 202.5 < angle < 157.5
+  // -1, -1 = 247.5 < angle < 202.5
+  //  0, -1 = 292.5 < angle < 247.5
+  //  1, -1 = 337.5 < angle < 292.5
+  //  1,  0 = 360 (382.5) < angle < 337.5
+  [
+    [  1,  0,  22.5,      0],
+    [  1,  1,  67.5,   22.5],
+    [  0,  1, 112.5,   67.5],
+    [ -1,  1, 157.5,  112.5],
+    [ -1,  0, 202.5,  157.5],
+    [ -1, -1, 247.5,  202.5],
+    [  0, -1, 292.5,  247.5],
+    [  1, -1, 337.5,  292.5],
+    [  1,  0,   360,  337.5]
+  ],
+  //
+  // H < LIST_RADIUS_ab[2]
+  //  2, 0 =  11.25 < angle <      0 (-11.25) 
+  //  2, 1 =  33.75 < angle <  11.25 
+  //  2, 2 =  56.25 < angle <  33.75 
+  //  1, 2 =  78.75 < angle <  56.25 
+  //  0, 2 = 101.25 < angle <  78.75 
+  // -1, 2 = 123.75 < angle < 101.25 
+  // -2, 2 = 146.25 < angle < 123.75
+  // -2, 1 = 168.75 < angle < 146.25 
+  // -2, 0 = 191.25 < angle < 168.75 
+  // -2,-1 = 213.75 < angle < 191.25 
+  // -2,-2 = 236.25 < angle < 213.75 
+  // -1,-2 = 258.75 < angle < 236.25 
+  //  0,-2 = 281.25 < angle < 258.75 
+  //  1,-2 = 303.75 < angle < 281.25 
+  //  2,-2 = 326.25 < angle < 303.75 
+  //  2,-1 = 348.75 < angle < 326.25 
+  //  2, 0 = 360 (371.25) < angle < 348.75
+  [
+    [ 2, 0,  11.25,      0],
+    [ 2, 1,  33.75,  11.25],
+    [ 2, 2,  56.25,  33.75],
+    [ 1, 2,  78.75,  56.25],
+    [ 0, 2, 101.25,  78.75],
+    [-1, 2, 123.75, 101.25],
+    [-2, 2, 146.25, 123.75],
+    [-2, 1, 168.75, 146.25],
+    [-2, 0, 191.25, 168.75],
+    [-2,-1, 213.75, 191.25],
+    [-2,-2, 236.25, 213.75],
+    [-1,-2, 258.75, 236.25],
+    [ 0,-2, 281.25, 258.75],
+    [ 1,-2, 303.75, 281.25],
+    [ 2,-2, 326.25, 303.75],
+    [ 2,-1, 348.75, 326.25],
+    [ 2, 0,    360, 348.75]
+  ],
+  //
+  // H < LIST_RADIUS_ab[3]
+  //  3, 0 =   7.5 < angle <     0 (-7.5) 
+  //  3, 1 =  22.5 < angle <   7.5 
+  //  3, 2 =  37.5 < angle <  22.5 
+  //  3, 3 =  52.5 < angle <  37.5 
+  //  2, 3 =  67.5 < angle <  52.5 
+  //  1, 3 =  82.5 < angle <  67.5 
+  //  0, 3 =  97.5 < angle <  82.5 
+  // -1, 3 = 112.5 < angle <  97.5 
+  // -2, 3 = 127.5 < angle < 112.5 
+  // -3, 3 = 142.5 < angle < 127.5 
+  // -3, 2 = 157.5 < angle < 142.5 
+  // -3, 1 = 172.5 < angle < 157.5 
+  // -3, 0 = 187.5 < angle < 172.5 
+  // -3,-1 = 202.5 < angle < 187.5 
+  // -3,-2 = 217.5 < angle < 202.5 
+  // -3,-3 = 232.5 < angle < 217.5 
+  // -2,-3 = 247.5 < angle < 232.5 
+  // -1,-3 = 262.5 < angle < 247.5 
+  //  0,-3 = 277.5 < angle < 262.5 
+  //  1,-3 = 292.5 < angle < 277.5 
+  //  2,-3 = 307.5 < angle < 292.5 
+  //  3,-3 = 322.5 < angle < 307.5 
+  //  3,-2 = 337.5 < angle < 322.5 
+  //  3,-1 = 352.5 < angle < 337.5 
+  //  3, 0 = 360 (367.5) < angle < 352.5
+  [
+    [ 3, 0,   7.5,     0],
+    [ 3, 1,  22.5,   7.5],
+    [ 3, 2,  37.5,  22.5],
+    [ 3, 3,  52.5,  37.5],
+    [ 2, 3,  67.5,  52.5],
+    [ 1, 3,  82.5,  67.5],
+    [ 0, 3,  97.5,  82.5],
+    [-1, 3, 112.5,  97.5],
+    [-2, 3, 127.5, 112.5],
+    [-3, 3, 142.5, 127.5],
+    [-3, 2, 157.5, 142.5],
+    [-3, 1, 172.5, 157.5],
+    [-3, 0, 187.5, 172.5],
+    [-3,-1, 202.5, 187.5],
+    [-3,-2, 217.5, 202.5],
+    [-3,-3, 232.5, 217.5],
+    [-2,-3, 247.5, 232.5],
+    [-1,-3, 262.5, 247.5],
+    [ 0,-3, 277.5, 262.5],
+    [ 1,-3, 292.5, 277.5],
+    [ 2,-3, 307.5, 292.5],
+    [ 3,-3, 322.5, 307.5],
+    [ 3,-2, 337.5, 322.5],
+    [ 3,-1, 352.5, 337.5],
+    [ 3, 0,   360, 352.5]
+  ]
+]
 const RADIUS = 18;
 
 function degToRad(degrees) {
@@ -41,18 +157,33 @@ var T_global = 90
 var P_move = 90
 var T_move = 90
 
-var list_angle_2_pixel = [0, 20, 60, 100, 140]
+var LIST_RADIUS_ab = [20, 60, 100, 140]
+
+function calculateCircleSectionCoordinates(xCenter, yCenter, radiusInner, radiusOuter, section){
+  var angleSection = 360/section;
+  var countSection = 360/angleSection;
+  var listCircleSectionCoordinates = []
+  var angleOffset = angleSection/2
+  for(let i = 0; i < countSection; i++){
+    var angle = angleOffset + i*angleSection
+    var xInner = xCenter + radiusInner * Math.sin(Math.PI * 2 * angle / 360);
+    var yInner = yCenter + radiusInner * Math.cos(Math.PI * 2 * angle / 360);
+    var xOuter = xCenter + radiusOuter * Math.sin(Math.PI * 2 * angle / 360);
+    var yOuter = yCenter + radiusOuter * Math.cos(Math.PI * 2 * angle / 360);
+    listCircleSectionCoordinates.push([xInner, yInner, xOuter, yOuter])
+  }
+  return listCircleSectionCoordinates
+}
 
 function canvasDraw() {
-  // ctx.fillStyle = "black";
-  // ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.beginPath();
-  ctx.arc(w_origin, h_origin, RADIUS, 0, degToRad(360), true);
-  ctx.lineWidth = 3;
-  ctx.strokeStyle = 'black';
-  ctx.stroke();
-  ctx.closePath()
+
+  // ctx.beginPath();
+  // ctx.arc(w_origin, h_origin, RADIUS, 0, degToRad(360), true);
+  // ctx.lineWidth = 3;
+  // ctx.strokeStyle = 'black';
+  // ctx.stroke();
+  // ctx.closePath()
 
   // remove aliasing
   ctx.beginPath();
@@ -77,27 +208,35 @@ function canvasDraw() {
   ctx.closePath()
 
   // Grid
-  ctx.beginPath();
-  for(let i = 0; i < list_angle_2_pixel.length; i++){
-    pixel = list_angle_2_pixel[i]
-    var x_up = w_origin + pixel
-    var y_up = h_origin + pixel
-    var x_down = w_origin - pixel
-    var y_down = h_origin - pixel
-    ctx.moveTo(x_up, 0);
-    ctx.lineTo(x_up, canvas.height);
-    ctx.moveTo(0, y_up);
-    ctx.lineTo(canvas.width, y_up);
-    ctx.moveTo(x_down, 0);
-    ctx.lineTo(x_down, canvas.height);
-    ctx.moveTo(0, y_down);
-    ctx.lineTo(canvas.width, y_down);
-  }
-
+  ctx.moveTo(w_origin,  h_origin);
   ctx.lineWidth = 1;
   ctx.strokeStyle = 'black';
-  ctx.stroke();
-  ctx.closePath()
+  for(let i = 0; i < LIST_RADIUS_ab.length; i++){
+    var pixel = LIST_RADIUS_ab[i]
+    // ctx.moveTo(x_up, 0);
+    ctx.beginPath();
+    ctx.arc(w_origin, h_origin, pixel, 0, degToRad(360), true);
+    ctx.stroke();
+    ctx.closePath()
+    if (i < LIST_RADIUS_ab.length) {
+      var radiusInner = LIST_RADIUS_ab[i]
+      var radiusOuter = LIST_RADIUS_ab[i + 1]
+      var listCircleSectionCoordinates = calculateCircleSectionCoordinates(w_origin, h_origin, radiusInner, radiusOuter, 8*(i+1))
+      for(let j = 0; j < listCircleSectionCoordinates.length; j++){
+        // [xInner, yInner, xOuter, yOuter]
+        var sectionCoordinates = listCircleSectionCoordinates[j]
+        var xInner = sectionCoordinates[0]
+        var yInner = sectionCoordinates[1]
+        var xOuter = sectionCoordinates[2]
+        var yOuter = sectionCoordinates[3]
+        ctx.beginPath();
+        ctx.moveTo(xInner, yInner);
+        ctx.lineTo(xOuter,  yOuter);
+        ctx.stroke();
+        ctx.closePath()
+      }
+    }
+  }
 }
 canvasDraw();
 
@@ -176,6 +315,9 @@ function loop() {
     }
     a_cursor = convert_x_to_a(x_cursor)
     b_cursor = convert_y_to_b(y_cursor)
+    ab_cursor = convert_xy_to_ab(x_cursor, y_cursor)
+    a_cursor = ab_cursor[0]
+    b_cursor = ab_cursor[1]
     if (!(a_cursor == 0 && b_cursor == 0)) {
       var hyp_move_delta = hyp_cursor - hyp_move
       var x_move_delta = x_cursor/hyp_cursor*hyp_move_delta
@@ -246,10 +388,10 @@ function convert_h_to_y(h){
 
 function convert_x_to_a(x){
   var index = 0
-  for(let i = 1; i < list_angle_2_pixel.length; i++){
+  for(let i = 0; i < LIST_RADIUS_ab.length; i++){
     index = i
     // Skip checking for 0 case
-    pixel = list_angle_2_pixel[i]
+    pixel = LIST_RADIUS_ab[i]
     if (Math.abs(x) < pixel) {
       index = index - 1
       break;
@@ -264,6 +406,38 @@ function convert_x_to_a(x){
 }
 function convert_y_to_b(y){
   return convert_x_to_a(y)
+}
+function convert_xy_to_ab(x, y){
+  var polarCoor = cartesian2Polar(x, y)
+  for(let i = 0; i < LIST_RADIUS_ab.length; i++){
+    var r = LIST_RADIUS_ab[i]
+    if (polarCoor.distance < r || i == LIST_RADIUS_ab.length - 1) { // For case of distance large than the largest r, use largest r
+      if(i == 0) {
+        return [0, 0]
+      }
+      for(let j = 0; j < LIST_ANGLE_to_ab[i-1].length; j++){
+        var a = LIST_ANGLE_to_ab[i-1][j][0]
+        var b = LIST_ANGLE_to_ab[i-1][j][1]
+        var angle_end = LIST_ANGLE_to_ab[i-1][j][2]
+        var angle_start = LIST_ANGLE_to_ab[i-1][j][3]
+        if (polarCoor.degrees >= angle_start && polarCoor.degrees <= angle_end) {
+          return [a, b]
+        }
+      }
+    }
+  }
+
+  console.log("Cannot find for r=" + polarCoor.distance + " angle="+polarCoor.degrees)
+}
+function cartesian2Polar(x, y){
+  var distance = Math.hypot(x, y)
+  var radians = Math.atan2(y, x) //This takes y first
+  var degrees = radians * (180/Math.PI)
+  if(degrees < 0){
+    degrees = 360 + degrees
+  }
+  var polarCoor = { distance:distance, radians:radians, degrees:degrees}
+  return polarCoor
 }
 
 loop()
