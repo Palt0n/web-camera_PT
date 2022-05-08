@@ -110,3 +110,4 @@ $ python app_basic.py
 ```
 The site should be accessible on your localhost at `http://127.0.0.1:5000`
 # NOTE that if you refresh the page, libcamera will die and need to be restarted.
+If you have already setup the `systemd` service to auto restart it then just need to just refresh the page twice every time.
