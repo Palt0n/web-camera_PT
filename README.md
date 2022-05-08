@@ -13,6 +13,7 @@ Controls added to move Camera in Pan and Tilt directions by sending MQTT command
 2. View in windows machine using VLC
 ## Creating mjpeg stream
 Run this command on RPI, add `-v` to view verbose log
+
 Send with 144p
 ```
 libcamera-vid -t 0 --width 256 --height 144 -q 100 -n --codec mjpeg --inline --listen -o tcp://192.168.XX.XX:XXXX
@@ -41,7 +42,7 @@ This is the stream address
 ```
 tcp/mjpeg://192.168.XX.XXXX:XXXX
 ```
-You should see the video stream, but it will have a 2 seconds delay.
+You should see the video stream, but it will have a 2 seconds delay. We can reduce this delay by using opencv to read the stream.
 
 ## Create systemd to auto restart service
 ```
