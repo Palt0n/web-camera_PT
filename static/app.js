@@ -41,7 +41,7 @@ var T_global = 90
 var P_move = 90
 var T_move = 90
 
-var list_angle_2_pixel = [0, 20, 40, 60, 80]
+var list_angle_2_pixel = [0, 20, 60, 100, 140]
 
 function canvasDraw() {
   // ctx.fillStyle = "black";
