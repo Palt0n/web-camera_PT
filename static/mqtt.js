@@ -72,6 +72,20 @@ function setButtonActions() {
         buttons[i].onclick = function(){
             sendMessage(JSON.stringify({"action": this.value}))
     }};
+    buttons = document.getElementsByClassName('btn-on-relay');
+    for(var i = 0; i < buttons.length; i++) {
+        button = buttons[i];
+        buttons[i].onclick = function(){
+            var field = "relay_" + this.value;
+            sendMessage(JSON.stringify({[field]: 1}))
+    }};
+    buttons = document.getElementsByClassName('btn-off-relay');
+    for(var i = 0; i < buttons.length; i++) {
+        button = buttons[i];
+        buttons[i].onclick = function(){
+            var field = "relay_" + this.value;
+            sendMessage(JSON.stringify({[field]: 0}))
+    }};
 }
 
 function sendMessage(value){

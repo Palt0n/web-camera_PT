@@ -159,6 +159,29 @@ var T_move = 90
 
 var LIST_RADIUS_ab = [5, 30, 70, 140]
 
+var mouseIsDown = false;
+
+var statusMouseCanvas = 0
+
+canvas.onmousedown = function(e){
+  if (statusMouseCanvas == 0){
+    return
+  }
+  mouseIsDown = true;
+  message = {
+    "relay_1": 1,
+  }
+  sendMessage(JSON.stringify(message))
+}
+
+canvas.onmouseup = function(e){
+  mouseIsDown = false;
+  message = {
+    "relay_1": 0,
+  }
+  sendMessage(JSON.stringify(message))
+}
+
 function calculateCircleSectionCoordinates(xCenter, yCenter, radiusInner, radiusOuter, section){
   var angleSection = 360/section;
   var countSection = 360/angleSection;
@@ -259,10 +282,13 @@ document.addEventListener('mozpointerlockchange', lockChangeAlert, false);
 function lockChangeAlert() {
   if (document.pointerLockElement === canvas ||
       document.mozPointerLockElement === canvas) {
+        
+    statusMouseCanvas = 1
     console.log('The pointer lock status is now locked');
     document.addEventListener("mousemove", updatePosition, false);
   } else {
-    console.log('The pointer lock status is now unlocked');  
+    console.log('The pointer lock status is now unlocked');
+    statusMouseCanvas = 0
     document.removeEventListener("mousemove", updatePosition, false);
   }
 }
@@ -315,15 +341,15 @@ function loop() {
     }
     a_cursor = convert_x_to_a(x_cursor)
     b_cursor = convert_y_to_b(y_cursor)
-    ab_cursor = convert_xy_to_ab(x_cursor, y_cursor)
+    var ab_cursor = convert_xy_to_ab(x_cursor, y_cursor)
     a_cursor = ab_cursor[0]
     b_cursor = ab_cursor[1]
     if (!(a_cursor == 0 && b_cursor == 0)) {
-      var hyp_move_delta = hyp_cursor - hyp_move
-      var x_move_delta = x_cursor/hyp_cursor*hyp_move_delta
-      var y_move_delta = y_cursor/hyp_cursor*hyp_move_delta
-      x_cursor = 0//x_move_delta
-      y_cursor = 0//y_move_delta
+      // var hyp_move_delta = hyp_cursor - hyp_move
+      // var x_move_delta = x_cursor/hyp_cursor*hyp_move_delta
+      // var y_move_delta = y_cursor/hyp_cursor*hyp_move_delta
+      x_cursor = 0;//x_move_delta
+      y_cursor = 0;//y_move_delta
       moveCamera(a_cursor, b_cursor)
     }
     // console.log("x: "+x_cursor+" y: "+y_cursor+" a: "+a_cursor+" b: "+b_cursor)
