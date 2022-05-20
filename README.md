@@ -13,6 +13,7 @@ Controls added to move Camera in Pan and Tilt directions by sending MQTT command
 2. View in windows machine using VLC
 ## Creating mjpeg stream
 Run this command on RPI, add `-v` to view verbose log
+The IP Address is the RPI's address, so could probably replace this with `127.0.0.1` or `localhost`, not sure, never tried
 
 Send with 144p
 ```
