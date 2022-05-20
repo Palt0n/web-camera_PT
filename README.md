@@ -39,7 +39,7 @@ Aborted
 At this point, the mjpeg stream should be viewable from your Windows PC.
 Download vlc from https://www.videolan.org/vlc/download-windows.html
 Navigate to `Media` > `Open Network Stream`
-This is the stream address
+This is the stream address, the IP Address is the RPI's IP address
 ```
 tcp/mjpeg://192.168.XX.XXXX:XXXX
 ```
