@@ -46,6 +46,7 @@ tcp/mjpeg://192.168.XX.XXXX:XXXX
 You should see the video stream, but it will have a 2 seconds delay. We can reduce this delay by using opencv to read the stream.
 
 ## Create systemd to auto restart service
+Everytime the connection is broken/reset, the libcamera service will die, so these are the steps to set up an auto reset service
 ```
 cd /lib/systemd/system/
 sudo nano libcamera_stream.service
