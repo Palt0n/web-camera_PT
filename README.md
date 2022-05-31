@@ -1,11 +1,24 @@
 # web-camera_PT
-A Web flask server converts the MJPEG stream from RPI to JPG img using opencv, then display in browser.
-Controls added to move Camera in Pan and Tilt directions by sending MQTT commands
+A Raspberry Pi streams MJEPG Video to a Windows PC running a Web Flask server. The server converts the MJPEG stream to `.jpg` img stream using `opencv` viewable in Chrome browser. Two RDS3115MG servos connected to the Raspberry Pi are controlled using the Adafruit 16-Channel PWM/Servo Hat. A FOTEK SSR-25DD Solid State Relay is attached directly to the GPIO pin of the Raspberry Pi to control a Water Pump. The servos and the Relay are controllable through MQTT.
 
-# Stuff Needed
+On clicking the video stream, you will be able to control the Camera in Pan and Tilt directions and mouse down activates the Water Pump.
+
+# Stuff Needed to view camera stream
 1. RPI 3B+ with Bullseye arm64 lite
 2. Raspberry Pi Camera v2.1
 4. Windows Machine
+5. RPI Power Supply
+# Stuff Needed to pan tilt
+5. RDS3115MG Servo Motors (Or servo motors which are strong enough)
+6. Adafruit 16-Channel PWM/Servo Hat
+7. 3D printed parts
+8. Server Running a MQTT Broker
+5. Power Supply for Servo
+# Stuff Needed to make water turret
+9.  12V Portable Agriculture Sprayer
+10. Solid State Relay
+11. 3D printed parts
+12. Power Supply for 12V Motors
 
 # Setup in RPI
 ## Check if libcamera works/stream setup correctly
