@@ -204,7 +204,7 @@ function canvasDraw() {
   // ctx.beginPath();
   // ctx.arc(w_origin, h_origin, RADIUS, 0, degToRad(360), true);
   // ctx.lineWidth = 3;
-  // ctx.strokeStyle = 'black';
+  // ctx.strokeStyle = 'lime';
   // ctx.stroke();
   // ctx.closePath()
 
@@ -217,7 +217,7 @@ function canvasDraw() {
   // ctx.lineTo(w_cursor + 30,  h_cursor);
   // Line color
   ctx.lineWidth = 2;
-  ctx.strokeStyle = 'black';
+  ctx.strokeStyle = 'lime';
   ctx.stroke();
   ctx.closePath()
 
@@ -226,14 +226,14 @@ function canvasDraw() {
   ctx.moveTo(w_origin,  h_origin);
   ctx.lineTo(w_cursor ,  h_cursor);
   ctx.lineWidth = 1;
-  ctx.strokeStyle = 'black';
+  ctx.strokeStyle = 'lime';
   ctx.stroke();
   ctx.closePath()
 
   // Grid
   ctx.moveTo(w_origin,  h_origin);
   ctx.lineWidth = 1;
-  ctx.strokeStyle = 'black';
+  ctx.strokeStyle = 'lime';
   for(let i = 0; i < LIST_RADIUS_ab.length; i++){
     var pixel = LIST_RADIUS_ab[i]
     // ctx.moveTo(x_up, 0);
