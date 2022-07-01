@@ -260,6 +260,36 @@ function canvasDraw() {
       }
     }
   }
+
+  // Horizontal Position Bar
+  ctx.beginPath();
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'lime';
+  ctx.moveTo(10, 350);
+  ctx.lineTo(630,  350);
+  ctx.stroke();
+
+  // Vertical Position Bar
+  ctx.beginPath();
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'lime';
+  ctx.moveTo(10, 10);
+  ctx.lineTo(10, 350);
+  ctx.stroke();
+
+  // Horizontal Position Cursor
+  ctx.beginPath();
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'lime';
+  ctx.arc(10+(A_global/180)*620, 350, 10, 0, 2 * Math.PI);
+  ctx.stroke();
+  
+  // Vertical Position Cursor
+  ctx.beginPath();
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'lime';
+  ctx.arc(10, 350-(B_global/180)*340, 10, 0, 2 * Math.PI);
+  ctx.stroke();
 }
 canvasDraw();
 
