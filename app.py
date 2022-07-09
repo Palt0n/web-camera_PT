@@ -12,11 +12,11 @@ MQTT_BROKER_USER = os.environ.get("MQTT_BROKER_USER")
 MQTT_BROKER_PASSWORD = os.environ.get("MQTT_BROKER_PASSWORD")
 MQTT_TOPIC = os.environ.get("MQTT_TOPIC")
 MQTT_CLIENT_NAME = os.environ.get("MQTT_CLIENT_NAME")
-assert MQTT_BROKER_ADDRESS
-assert MQTT_BROKER_PORT
-assert MQTT_BROKER_USER
-assert MQTT_BROKER_PASSWORD
-assert MQTT_TOPIC
+assert MQTT_BROKER_ADDRESS, "Environment variable $MQTT_BROKER_ADDRESS is not set"
+assert MQTT_BROKER_PORT, "Environment variable $MQTT_BROKER_PORT is not set"
+assert MQTT_BROKER_USER, "Environment variable $MQTT_BROKER_USER is not set"
+assert MQTT_BROKER_PASSWORD, "Environment variable $MQTT_BROKER_PASSWORD is not set"
+assert MQTT_TOPIC, "Environment variable $MQTT_TOPIC is not set"
 MQTT_BROKER_PORT = int(MQTT_BROKER_PORT)
 broker_address = MQTT_BROKER_ADDRESS
 port = MQTT_BROKER_PORT
@@ -61,4 +61,4 @@ def index():
 def video_feed():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")

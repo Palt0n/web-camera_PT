@@ -133,3 +133,10 @@ $ python app_basic.py
 The site should be accessible on your localhost at `http://127.0.0.1:5000`
 # NOTE that if you refresh the page, libcamera will die and need to be restarted.
 If you have already setup the `systemd` service to auto restart it then just need to just refresh the page twice every time.
+
+To allow access to other computers on the same network, you need to set the appropriate firewall rules
+```
+netsh firewall add portopening TCP 5000 "WaterTurret"
+netsh advfirewall firewall add rule name="WaterTurret TCP Port 5000" dir=in action=allow protocol=TCP localport=5000
+netsh advfirewall firewall add rule name="WaterTurret TCP Port 5000" dir=out action=allow protocol=TCP localport=5000
+```
